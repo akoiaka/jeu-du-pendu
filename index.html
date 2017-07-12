@@ -103,9 +103,19 @@
                 coupsManques++;
                 document.images['pendu'].src="images/pendu_"+coupsManques+".jpg"; // On change l'image du pendu
 
+                //ON PEUT ESSAYER DE MODIFIER UNE IMAGE ET SON CSS SELON LES REPONSES AVEC COMME BASE POSSIBLE LE CODE CI-DESSOUS //
+                //         if(!hit){
+//                var wrongletters = document.getElementById("wrongletters");
+//                var letter = document.createTextNode(" " + character);
+//                wrongletters.appendChild(letter);
+//                error++;
+//                var hangman = document.getElementById("hangman");
+//                hangman.src = "./images/h" + error + ".png";
+//            }
+
                 // Si on a raté 9 fois :
                 if(coupsManques==9){
-                    alert("Vous avez perdu !");
+                    alert("BAD ASS !! C EST LOUPÉ !");
                     for(var i=0; i<tailleMot; i++) {
                         tableauMot[i].style.visibility='visible'; //permet d'afficher le mot si on a perdu.
                     }
@@ -126,9 +136,8 @@
 
         <div id="page">
 
-            <img name="pendu" class="pendu" src="images/pendu_0.jpg">
+            <img name="pendu" class="pendu" src="pendu.jpeg">
 
-            <h1>Jeu de pendu</h1>
 
             <h2>MONTRE QUE TU ES UN AS ET REMPORTE LA CAGNOTE DE BRAVOS ou SOIS UN ...</h2>
 
