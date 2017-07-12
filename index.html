@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="Semantic UI/semantic.css">
+    <script src="Semantic UI/semantic.js"></script>
+    <title>Title</title>
+</head>
+
+<body>
+
+<main>
+    <header>
+        <h2 class="ui center aligned icon header">
+            <i class="circular users icon"></i>JEU DU PENDU</h2>
+    </header>
+
+
+    <!--<?php-->
+
+<!--$tabDesMots=file('dico.txt',FILE_SKIP_EMPTY_LINES);-->
+<!--$nbreLignes=count($tabDesMots, COUNT_RECURSIVE);-->
+<!--$ligneAleatoire = mt_rand (0,($nbreLignes-1));-->
+<!--$mots= $tabDesMots[$ligneAleatoire];-->
+ <!--?>-->
+
+
+    <!--&lt;!&ndash;<input type="text" id="lettre" placeholder="ex : a, b, c..." required="required">&ndash;&gt;-->
+    <!--<input type="hidden" id="motrandom" value=<?php echo($mots); ?>-->
+
+
+
+    <script type='text/javascript' language='javascript'>
+
+        // JE VAIS TENTER CI DESSOUS DE RECUPERER LES MOTS A PARTIR DU FICHIER .TXT fourni
+//        ( VOIR AUSSI PHP PLUS HAUT SERVANT A LIRE CHAQUE MOT ET A INCREMENTER CHAQUE LIGNE DE 1 après chaque grand espace rencontré (espace de fin de mot))
+
+//        var mots=$("#motrandom").val();
+
+
+
+        var motSecret;
+        var now=new Date();   // Date d'aujourd'hui
+        var tableauMot=new Array(); // Le tableau qui contient les lettres du mot à trouver
+        var mots=new Array();  // Le tableau qui contient tous les mots possibles
+        var tailleMot;    // Le nombre de lettres du mot à trouver
+        var coupsManques=0;   // Le nombre de lettres fausses essayées
+        var lettresTrouvees=0;  // Le nombre de lettres trouvées
+        var fini=false;    // true si le jeu est terminé
+
+
+        mots[0]="JAVASCRIPT";
+        mots[1]="INFORMATIQUE";
+        mots[2]="CODA";
+        mots[3]="ORDINATEUR";
+        mots[4]="PROGRAMME";
+        mots[5]="AKOI";
+        mots[6]="JQUERYUI";
+        mots[7]="LABANDEATOTO";
+        mots[8]="CLAVIER";
+        mots[9]="SOURIS";
+        mots[10]="PHPMYADMIN";
+        mots[11]="PLANETE";
+        mots[12]="TOURNEZMENAGES";
+
+        // ON PREND UN MOT AU HASARD EN FONCTION DE LA SECONDE EN COURS
+
+        motSecret=mots[now.getSeconds() % mots.length];
+        tailleMot=motSecret.length;
+
+        // PERMET DE CHANGER LA COULEUR DES TOUCHES DU CLAVIER (element=lettre,couleur=lightgreen).
+        function changeCouleur(element,couleur){
+            element.style.backgroundColor=couleur;
+        }
+
+        // Gère tous les traitements à faire lorsqu'on appuie sur une touche
+        function proposer(element){
+            // Si la couleur de fond est lightgreen, c'est qu'on a déjà essayé - on quitte la fonction
+            if(element.style.backgroundColor=="lightGreen" ||fini) {
+                return;
+            }
+
+            // On récupère la lettre du clavier et on met la touche en lightgreen (pour signaler qu'elle est cliquée)
+            var lettre=element.innerHTML;
+            changeCouleur(element,"lightGreen");
+
+            // On met la variable trouve à false;
+            var trouve=false;
+
+            // On parcours chaque lettre du mot, on cherche si on trouve la lettre sélectionnée au clavier
+            for(var i=0; i<tailleMot; i++) {
+                // Si c'est le cas :
+                if(tableauMot[i].innerHTML==lettre) {
+                    tableauMot[i].style.visibility='visible'; // On affiche la lettre en bas (au début elle est cachée puis devient visible--css)
+                    trouve=true;
+                    lettresTrouvees++;
+                }
+            }
+
+            // Si la lettre n'est pas présente, trouvé vaut toujours false :
+            if(!trouve){
+                coupsManques++;
+                document.images['pendu'].src="images/pendu_"+coupsManques+".jpg"; // On change l'image du pendu
+
+                // Si on a raté 9 fois :
+                if(coupsManques==9){
+                    alert("Vous avez perdu !");
+                    for(var i=0; i<tailleMot; i++) {
+                        tableauMot[i].style.visibility='visible'; //permet d'afficher le mot si on a perdu.
+                    }
+
+                    fini=true;
+                    // on affiche le mot, on fini le jeu
+                }
+            }
+
+            if(lettresTrouvees==tailleMot){
+                alert("Bah tu vois que t'es pas si NUL !");
+                fini=true;
+            }
+        }
+
+    </script>
+
+
+        <div id="page">
+
+            <img name="pendu" class="pendu" src="images/pendu_0.jpg">
+
+            <h1>Jeu de pendu</h1>
+
+            <h2>MONTRE QUE TU ES UN AS ET REMPORTE LA CAGNOTE DE BRAVOS ou SOIS UN ...</h2>
+
+            <table id="clavier">
+                <tr>
+                    <td onclick="proposer(this);" >A</td>
+                    <td onclick="proposer(this);" >B</td>
+                    <td onclick="proposer(this);" >C</td>
+                    <td onclick="proposer(this);" >D</td>
+                    <td onclick="proposer(this);" >E</td>
+                    <td onclick="proposer(this);" >F</td>
+                    <td onclick="proposer(this);" >G</td>
+                    <td onclick="proposer(this);" >H</td>
+                    <td onclick="proposer(this);" >I</td>
+                    <td onclick="proposer(this);" >J</td>
+                </tr>
+                <tr>
+                    <td onclick="proposer(this);" >K</td>
+                    <td onclick="proposer(this);" >L</td>
+                    <td onclick="proposer(this);" >M</td>
+                    <td onclick="proposer(this);" >N</td>
+                    <td onclick="proposer(this);" >O</td>
+                    <td onclick="proposer(this);" >P</td>
+                    <td onclick="proposer(this);" >Q</td>
+                    <td onclick="proposer(this);" >R</td>
+                    <td onclick="proposer(this);" >S</td>
+                    <td onclick="proposer(this);" >T</td>
+                </tr>
+                <tr>
+                    <td onclick="proposer(this);" >U</td>
+                    <td onclick="proposer(this);" >V</td>
+                    <td onclick="proposer(this);" >W</td>
+                    <td onclick="proposer(this);" >X</td>
+                    <td onclick="proposer(this);" >Y</td>
+                    <td onclick="proposer(this);" >Z</td>
+                </tr>
+            </table>
+            <br>
+            <a class="lien" href="javascript:location.reload();">Nouvelle partie</a>
+
+            <table id="mot">
+                <tr>
+                    <script>
+                        for(var i=0; i<tailleMot; i++){
+                            document.write("<td> <p id=\""+i+"\">"+motSecret.charAt(i)+"</p></td>");
+                        }
+                    </script>
+                </tr>
+            </table>
+
+
+            <script>
+                for(var i=0; i<tailleMot; i++) {
+                    tableauMot[i]=document.getElementById(i);
+                }
+            </script>
+
+        </div>
+        </main>
+
+</body>
+</html>
